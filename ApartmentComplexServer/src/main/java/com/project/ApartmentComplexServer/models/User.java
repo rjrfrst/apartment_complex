@@ -17,22 +17,34 @@ public class User {
     private String name;
 
     @Column
+    private int phoneNumber;
+
+    @Column
     private String email;
+
+    //Extension, turn password to a hash
+    @Column
+    private String password;
+
+    //Create a role for the user
+    //They can either be a tenant or the landlord
+
 
 
     //Constructor
-    public User(Long id, String name, String email) {
-        this.id = id;
+    public User(String name, int phoneNumber, String email, String password) {
         this.name = name;
+        this.phoneNumber = phoneNumber;
         this.email = email;
+        this.password = password;
     }
 
+    //empty constructor
     public User(){
 
     }
 
     //Getters and setters
-
 
     public Long getId() {
         return id;
@@ -55,4 +67,14 @@ public class User {
         this.email = email;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
+
+    //
 } //last
