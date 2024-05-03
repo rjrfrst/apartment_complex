@@ -1,7 +1,9 @@
 package com.project.ApartmentComplexServer.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -11,24 +13,32 @@ public class Apartment {
     //properties
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
     private long id;
-
-    //An apartment can have many users and users can live in one apartment
-    //Many to one
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
 
     private int apartmentNumber;
     private int numberOfBedrooms;
 
+    //An apartment can have many users and users can live in one apartment
+    //Many to Many = @JoinTable
+    @ManyToMany
+    @JoinTable(
+            name = "user_apartment", //name of the new joined table
+            joinColumns = @JoinColumn(name = "apartment_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private List<User> users;
+
+    //Many apartments belong to one building
+    @ManyToOne
+    @JoinColumn(name = "building_id")
+    @JsonIgnoreProperties
+    private Building building;
 
     //constructor
-    public Apartment(User user, int apartmentNumber, int numberOfBedrooms) {
-        this.user = user;
+    public Apartment(int apartmentNumber, int numberOfBedrooms) {
         this.apartmentNumber = apartmentNumber;
         this.numberOfBedrooms = numberOfBedrooms;
+        this.users = new ArrayList<>();
     }
 
     //empty constructor
@@ -60,11 +70,18 @@ public class Apartment {
         this.numberOfBedrooms = numberOfBedrooms;
     }
 
-    public User getUser() {
-        return user;
+    public List<User> getUsers() {
+        return users;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
+    public Building getBuilding() {
+        return building;
+    }
+    public void setBuilding(Building building) {
+        this.building = building;
+    }
+
 } //last

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jdk.jfr.Enabled;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,27 +17,22 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column
     private String name;
 
-    @Column
     private int phoneNumber;
 
-    @Column
     private String email;
 
     //Extension, turn password to a hash
-    @Column
     private String password;
 
     //Create a role for the user
     //They can either be a tenant or the landlord
 
-    @OneToMany(mappedBy = "user")
+    @ManyToMany
+    @Column
     @JsonIgnoreProperties({"user"})
     private List<Apartment> apartments;
-
-
 
     //Constructor
     public User(String name, int phoneNumber, String email, String password) {
@@ -44,15 +40,15 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.password = password;
+        this.apartments = new ArrayList<>();
     }
+
 
     //empty constructor
     public User(){
-
     }
 
     //Getters and setters
-
     public Long getId() {
         return id;
     }
@@ -72,6 +68,13 @@ public class User {
     }
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Apartment> getApartments() {
+        return apartments;
+    }
+    public void setApartments(List<Apartment> apartments) {
+        this.apartments = apartments;
     }
 
     @Override
