@@ -1,8 +1,11 @@
 package com.project.ApartmentComplexServer.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jdk.jfr.Enabled;
+
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -11,7 +14,7 @@ public class User {
     //Properties
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @Column
     private String name;
@@ -28,6 +31,10 @@ public class User {
 
     //Create a role for the user
     //They can either be a tenant or the landlord
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnoreProperties({"user"})
+    private List<Apartment> apartments;
 
 
 
