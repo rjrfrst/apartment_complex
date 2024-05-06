@@ -1,5 +1,6 @@
 package com.project.ApartmentComplexServer.components;
 
+import com.project.ApartmentComplexServer.models.Apartment;
 import com.project.ApartmentComplexServer.models.User;
 import com.project.ApartmentComplexServer.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,14 @@ public class DataLoader implements ApplicationRunner {
 
         userRepository.save(userOne);
 
+
+//        Apartments
+//        Apartment 1
+//        Apartment apartmentOne = new Apartment(
+//                001,
+//                1,
+//                userOne
+//        )
 
     }
 

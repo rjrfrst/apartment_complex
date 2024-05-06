@@ -20,13 +20,21 @@ public class Apartment {
 
     //An apartment can have many users and users can live in one apartment
     //Many to Many = @JoinTable
-    @ManyToMany
-    @JoinTable(
-            name = "user_apartment", //name of the new joined table
-            joinColumns = @JoinColumn(name = "apartment_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
+    //=========================================> First attempt <========================
+//    @ManyToMany
+//    @JoinTable(
+//            name = "user_apartment", //name of the new joined table
+//            joinColumns = @JoinColumn(name = "apartment_id"),
+//            inverseJoinColumns = @JoinColumn(name = "user_id")
+//    )
+//    private List<User> users;
+
+    //==============================================> Second attempt <======================
+
+    @ManyToMany(mappedBy = "apartments")
+    @JsonIgnoreProperties({"apartments"})
     private List<User> users;
+
 
     //Many apartments belong to one building
     @ManyToOne

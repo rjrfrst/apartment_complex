@@ -28,10 +28,15 @@ public class User {
 
     //Create a role for the user
     //They can either be a tenant or the landlord
+    //extension
 
     @ManyToMany
-    @Column
-    @JsonIgnoreProperties({"user"})
+    @JoinTable(
+            name = "rentals", //name of the new joined table
+            joinColumns = @JoinColumn(name = "apartment_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    @JsonIgnoreProperties({"users"})
     private List<Apartment> apartments;
 
     //Constructor
