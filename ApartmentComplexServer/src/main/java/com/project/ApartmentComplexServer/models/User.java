@@ -30,12 +30,7 @@ public class User {
     //They can either be a tenant or the landlord
     //extension
 
-    @ManyToMany
-    @JoinTable(
-            name = "rentals", //name of the new joined table
-            joinColumns = @JoinColumn(name = "apartment_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
+    @ManyToMany(mappedBy = "users")
     @JsonIgnoreProperties({"users"})
     private List<Apartment> apartments;
 
